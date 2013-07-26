@@ -49,11 +49,11 @@ module Sorcery
                 def init
                   @configuration = {
                       site: "https://developers.tradeking.com",
-                      authorize_path: '/authorize',
-                      request_token_path: '/request_token',
-                      access_token_path: '/access_token'
+                      authorize_path: '/oauth/authorize',
+                      request_token_path: '/oauth/request_token',
+                      access_token_path: '/oauth/access_token'
                   }
-                  @user_info_path = "/users/me"
+                  @user_info_path = "/v1/member/profile.json"
                 end
 
                 def get_user_hash
@@ -71,7 +71,7 @@ module Sorcery
                 # calculates and returns the url to which the user should be redirected,
                 # to get authenticated at the external provider's site.
                 def login_url(params,session)
-                  req_token = self.get_request_token
+                  req_token = self.get_request_token(@key, @secret)
                   session[:request_token]         = req_token.token
                   session[:request_token_secret]  = req_token.secret
                   self.authorize_url({:request_token => req_token.token, :request_token_secret => req_token.secret})
