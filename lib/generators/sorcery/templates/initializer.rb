@@ -67,7 +67,7 @@ Rails.application.config.sorcery.configure do |config|
 
 
   # -- external --
-  # What providers are supported by this app, i.e. [:twitter, :facebook, :github, :linkedin, :xing, :google, :liveid] .
+  # What providers are supported by this app, i.e. [:twitter, :facebook, :github, :linkedin, :xing, :google, :liveid, :tradeking] .
   # Default: `[]`
   #
   # config.external_providers =
@@ -139,6 +139,13 @@ Rails.application.config.sorcery.configure do |config|
   # config.liveid.callback_url = "http://mydomain.com:3000/oauth/callback?provider=liveid"
   # config.liveid.user_info_mapping = {:username => "name"}
 
+
+    # For information about TradeKing API:
+  +  # - user info fields go to https://developers.tradeking.com/documentation/oauth
+  +  #
+  +  # config.tradeking.key = ""
+  +  # config.tradeking.secret = ""
+  +  # config.tradeking.callback_url = "http://0.0.0.0:3000/oauth/callback?provider=tradeking"
 
   # --- user config ---
   config.user_config do |user|
