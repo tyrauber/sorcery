@@ -18,6 +18,7 @@ module Sorcery
           require 'sorcery/providers/heroku'
           require 'sorcery/providers/google'
           require 'sorcery/providers/jira'
+          require 'sorcery/providers/doorkeeper'
 
           Config.module_eval do
             class << self
@@ -50,8 +51,11 @@ module Sorcery
 
           # save the singleton ProviderClient instance into @provider
           def sorcery_get_provider(provider_name)
-            return unless Config.external_providers.include?(provider_name.to_sym)
-            Config.send(provider_name.to_sym)
+            if Config.external_providers.include?(provider_name.to_sym)
+              Config.send(provider_name.to_sym)
+            elsif Config.external_providers.include?(:doorkeeper) && Config.send(:doorkeeper).provider.present? && Config.send(:doorkeeper).provider == provider_name
+              Config.send(:doorkeeper)
+            end
           end
 
           # get the login URL from the provider, if applicable.  Returns nil if the provider
